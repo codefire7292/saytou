@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Enquete;
+use App\Models\Etudiant;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
-class EnquetesController extends Controller
+class EtudiantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,9 @@ class EnquetesController extends Controller
      */
     public function index()
     {
-        $result = Enquete::All();
-        return view('pages/shared/adminCoordinator/viewEnquete', compact('result'));
+        $result = Etudiant::All();
+      
+        return view('pages/shared/etudiant', compact('result'));
     }
 
     /**
@@ -25,9 +28,7 @@ class EnquetesController extends Controller
      */
     public function create()
     {
-        $createEnquete = TRUE;
         
-        return view('pages/admin/newEnquete', compact('createEnquete'));
     }
 
     /**
@@ -38,26 +39,29 @@ class EnquetesController extends Controller
      */
     public function store(Request $request)
     {
-        Enquete::create([
-            'Com_id' => $request->Com_id,
-            'Adm_id' => $request->Adm_id,
+        $validatedData = $request->validate([
+                                            'title' => 'required|unique:posts|max:255',
+                                            'body' => 'required',
+                                            ]);
+        Etudiant::create([
             'nom' => $request->nom,
-            'libelle' => $request->libelle,
-            'debut' => $request->debut,
-            'fin' => $request->fin,
-            'cout' => $request->cout,
+            'prenom' => $request->prenom,
+            'email' => $request->email,
+            'adresse' => $request->addresse,
+            'ville' => $request->ville,
+            'is_admin' => $request->statut,
+            'password' => Hash::make($request->password),
+            'date_naissance' => $request->birthday,
         ]);
-        $result = Enquete::All();
-        return view('pages/shared/adminCoordinator/viewEnquete', compact('result'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Enquete  $enquete
+     * @param  \App\Models\Etudiant  $etudiant
      * @return \Illuminate\Http\Response
      */
-    public function show(Enquete $enquete)
+    public function show(Etudiant $etudiant)
     {
         //
     }
@@ -65,10 +69,10 @@ class EnquetesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Enquete  $enquete
+     * @param  \App\Models\Etudiant  $etudiant
      * @return \Illuminate\Http\Response
      */
-    public function edit(Enquete $enquete)
+    public function edit(Etudiant $etudiant)
     {
         //
     }
@@ -77,10 +81,10 @@ class EnquetesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Enquete  $enquete
+     * @param  \App\Models\Etudiant  $etudiant
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Enquete $enquete)
+    public function update(Request $request, Etudiant $etudiant)
     {
         //
     }
@@ -88,10 +92,10 @@ class EnquetesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Enquete  $enquete
+     * @param  \App\Models\Etudiant  $etudiant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Enquete $enquete)
+    public function destroy(Etudiant $etudiant)
     {
         //
     }

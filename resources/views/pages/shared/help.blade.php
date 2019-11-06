@@ -6,5 +6,5 @@
 
 @section('content')
 	<br>
-	<h1>Liste des Etudiants</h1>
+	<h1>Votre page d'aide {{ Auth::user()->is_admin }}</h1>
 @endsection

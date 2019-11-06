@@ -2,12 +2,11 @@
 @extends('layouts.master', ['title'=> 'Acceuil'])
 
 @include('layouts.partials.footer')
-@include('layouts.partials.footer')
 
 @section('content')
 	<br>
 	<h1>Acceuil</h1>
-	Bonjour
+	Bonjour Admin
 @endsection
 
 @section('infobule')
