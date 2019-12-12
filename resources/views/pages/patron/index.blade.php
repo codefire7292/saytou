@@ -1,5 +1,5 @@
 
-@extends('layouts.app_patron', ['title'=> 'Acceuil'])
+@extends('layouts.partials.nav')
 
 @include('layouts.partials.footer')
 

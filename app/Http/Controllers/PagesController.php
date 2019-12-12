@@ -51,6 +51,11 @@ class PagesController extends Controller
     {
         return view('pages/patron/index');
     }
+//INVESTIGATOR returning
+    public function investigator_index()
+    {
+        return view('pages/investigator/index');
+    }
 
 //SHARED returning
     public function about()

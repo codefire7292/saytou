@@ -1,12 +1,12 @@
 
-@extends('layouts.app_coordinator', ['title'=> 'Acceuil'])
+@extends('layouts.partials.nav')
 
 @include('layouts.partials.footer')
 
 @section('content')
 	<br>
 	<h1>Acceuil</h1>
-	Bonjour	Coordination
+	Bonjour	Coordinateur
 @endsection
 
 @section('infobule')

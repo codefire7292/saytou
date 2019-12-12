@@ -1,14 +1,15 @@
 
-@extends('layouts.master', ['title'=> 'Acceuil'])
+@extends('layouts.partials.nav')
+
 
 @include('layouts.partials.form')
 @include('layouts.partials.footer')
 
 @section('content')
 <br>
-	<h1>About</h1>
-	<div class="row">
-		<div class="col-10">
+	<h1 class="pl-4">About</h1>
+	<div class="row justify-content-center">
+		<div class="col-9 shadow p-5 mb-5 bg-white rounded">
 			<h3>Le Lorem Ipsum est simplement</h3>
 				<p class="text-muted">
 				<i class="fa fa-quote-left fa-1x fa-pull-left fa-border"></i>
@@ -16,7 +17,7 @@
 				<i class="fa fa-quote-right fa-1x fa-pull-right fa-border"></i>
 				</p>
 		</div>
-		<div class="col-2">
+		<div class="col-2 p-3 ml-3 bg-white d-inline-block rounded">
 			<h5>
 				Références clées
 			</h5>

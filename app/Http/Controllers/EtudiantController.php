@@ -2,101 +2,75 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use App\Models\Etudiant;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use App\Models\User;
 
 class EtudiantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $result = Etudiant::All();
-      
+        $result = User::whereRole('etudiant')->oldest('nom')->paginate(5);
+        $profil = User::all();
+      //  $result = Etudiant::paginate(5);
         return view('pages/shared/etudiant', compact('result'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        
+        $createUser = TRUE;
+        return view('pages/coordinator/newEtudiant', compact('createUser'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
                                             'title' => 'required|unique:posts|max:255',
-                                            'body' => 'required',
-                                            ]);
+                                            'body' => 'required',   
+                             ]);
         Etudiant::create([
-            'nom' => $request->nom,
-            'prenom' => $request->prenom,
-            'email' => $request->email,
-            'adresse' => $request->addresse,
-            'ville' => $request->ville,
-            'is_admin' => $request->statut,
-            'password' => Hash::make($request->password),
+            'nom' => Str::upper($request->nom),
+            'prenom' => Str::ucfirst($request->prenom),
+            'email' => Str::lower($request->email),
+            'adresse' => Str::ucfirst($request->addresse),
+            'ville' => Str::ucfirst($request->ville),
             'date_naissance' => $request->birthday,
+            'password' => Hash::make($request->password),
         ]);
+        return redirect()->action('EtudiantController@create');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Etudiant  $etudiant
-     * @return \Illuminate\Http\Response
-     */
     public function show(Etudiant $etudiant)
     {
-        //
+      return view('pages/shared/showEtudiant', compact('etudiant'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Etudiant  $etudiant
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Etudiant $etudiant)
     {
-        //
+        return view('pages/shared/coordinatorInvestigator/updateEtudiant', compact('etudiant'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Etudiant  $etudiant
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Etudiant $etudiant)
     {
-        //
+        Etudiant::where('id', $user->id)
+            ->update([
+                'nom' => Str::upper($request->nom),
+                'prenom' => Str::ucfirst($request->prenom),
+                'email' => Str::lower($request->email),
+                'adresse' => Str::ucfirst($request->addresse),
+                'ville' => Str::ucfirst($request->ville),
+                'date_naissance' => $request->birthday,
+                'password' => Hash::make($request->password),
+            ]);
+        return redirect()->action('EtudiantController@index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Etudiant  $etudiant
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Etudiant $etudiant)
     {
-        //
+        Etudiant::destroy($etudiant->id);
+        return redirect()->action('EtudiantController@index');
     }
 }

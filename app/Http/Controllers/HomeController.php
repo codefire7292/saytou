@@ -25,13 +25,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->is_admin == 0 ) {
+        
+        if (Auth::user()->role === "admin" ) {
             return view('pages/admin/index');
-        } elseif (Auth::user()->is_admin == 1 ) {
+        } elseif (Auth::user()->role === "coordonnateur" ) {
             return view('pages/coordinator/index');
-        }elseif (Auth::user()->is_admin == 2 ) {
+        }elseif (Auth::user()->role === "commanditaire" ) {
+            return view('pages/patron/index');
+        }elseif (Auth::user()->role === "enquêteur" ) {
             return view('pages/investigator/index');
+        }elseif (Auth::user()->role === "étudiant" ) {
+            return view('pages/etudiant/index');
         }
-        return view('pages/patron/index');
     }
 }

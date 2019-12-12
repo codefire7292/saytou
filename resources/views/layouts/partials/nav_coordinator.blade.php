@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
-  <a class="navbar-brand" href="{{ route('coordinator_index') }}"><span class="fa fa-home"></span> 
+  <a class="navbar-brand" href="{{ route('coordinator_index') }}"><span class="ti-home"></span> 
 Acceuil</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -12,8 +12,14 @@ Acceuil</a>
         <a class="nav-link" href="{{ route('about_path') }}"><span class="fa fa-book"></span> 
 About <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('etudiant.index') }}"><span class="fa fa-user"></span> Etudiants</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+          Etudiants
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{ route('etudiant.index') }}"><i class="fa fa-list"></i> Lister</a>
+          <a class="dropdown-item" href="{{ route('etudiant.create') }}"><i class="fa fa-user-plus"></i> Ajouter</a>
+        </div>
       </li>
 
       <li class="nav-item dropdown">
@@ -24,8 +30,19 @@ About <span class="sr-only">(current)</span></a>
           <a class="dropdown-item" href="{{ route('user.index') }}"><i class="fa fa-list"></i> Lister</a>
           <a class="dropdown-item" href="{{ route('user.create') }}"><i class="fa fa-user-plus"></i> Ajouter</a>
         </div>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ route('enquete.index') }}"><i class="fa fa-cog fa-spin fa-1,5x"></i> Enquéte</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-world"></i>
+          Zones
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{ route('zone.index') }}"><i class="ti-map"></i> Lister</a>
+          <a class="dropdown-item" href="{{ route('zone.create') }}"><i class="ti-map-alt"></i> Ajouter</a>
+          <a class="dropdown-item" href="{{ route('zone.create') }}"><i class="fa fa-street-view"></i> Affectations</a>
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ route('help_path') }}"><i class="fa fa-life-ring"></i> Help</a>

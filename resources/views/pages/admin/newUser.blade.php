@@ -1,10 +1,11 @@
 
-@extends('layouts.master', ['title'=> 'Acceuil'])
+@extends('layouts.partials.nav')
 
 @include('layouts.partials.form')
+
 @include('layouts.partials.footer')
 
 @section('content')
 	<br>
-	<h1>Créer un nouveau utilisateur</h1>
+	<h1 class="row justify-content-center">Créer un nouveau utilisateur</h1>
 @endsection

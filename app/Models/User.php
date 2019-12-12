@@ -9,9 +9,18 @@ class User extends Model
     public $timestamps = false;	
     protected $table = 'Personne'; 
     protected $fillable = [
-        'nom', 'email', 
+        'nom', 'prenom', 'email', 
         'password','adresse', 
-        'ville', 'is_admin', 
+        'ville', 'role', 
         'date_naissance',
     ];
+    public function admin(){
+    	return $this->hasMany(Admin::class, 'id');
+    }
+    public function coordinator(){
+    	return $this->hasMany(Coordinator::class, 'id');
+    }
+    public function patron(){
+    	return $this->hasMany(Patron::class, 'id');
+    }
 }

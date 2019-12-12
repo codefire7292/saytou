@@ -2,19 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use App\Models\User;
+use Database\Seeds\UserTableSeeder;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Model;
 
 class UsersController extends Controller
 {
-     public function index()
+     public function index($role = null)
     {
-        $result = User::All();
-        return view('pages/admin/viewUser', compact('result'));
+
+        //$role = "coordinateur";
+
+     /*   if($role) {
+            if(Route::currentRouteName() == 'user.category') {
+                $model = new Category;
+            } else {
+                $model = new Actor;
+            }
+        }
+*/
+       // dd($role);
+        $query = $role ? User::whereRole($role)->where('role','!=','étudiant') : User::where('role','!=','étudiant');
+
+        $result = $query->oldest('nom')->paginate(5);
+        $profil = User::all();
+        //$result = User::paginate(5);
+        return view('pages/shared/adminCoordinator/viewUser', compact('result', 'profil', 'role'));
     }
     public function create()
     {
@@ -22,53 +42,54 @@ class UsersController extends Controller
         return view('pages/admin/newUser', compact('createUser'));
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //dd($request->path());
-        //dd($request->url());
-        //dd($request->all());
-        //dd($request->input());
-        //dd($request->input('nom'));
-        User::create([
-            'nom' => $request->nom,
-            'prenom' => $request->prenom,
-            'email' => $request->email,
-            'adresse' => $request->addresse,
-            'ville' => $request->ville,
-            'is_admin' => $request->statut,
+        User::create(
+        [
+            'nom' => Str::upper($request->nom),
+            'prenom' => Str::ucfirst($request->prenom),
+            'adresse' => Str::ucfirst($request->adresse),
+            'ville' => Str::ucfirst($request->ville),
+            'email' => Str::lower($request->email),
             'password' => Hash::make($request->password),
-            'date_naissance' => $request->birthday,
+            'role' => $request->role,
+            'date_naissance' => $request->date_naissance
         ]);
-        $lastUser = User::where('email', $request->email)->first()->id;
-        
-        //Storage::putFile('avatars', $request->file('avatar'));
-        //$request->file('avatar')->store('avatars');
-        //Storage::put($request->profile, new File('images/profile'));
-        //dd(Storage::files('images/profile'));
-        //Storage::put('images/profile', $request->profile);
-        $request->file('profile')->store('images/profile');
-        //Storage::move($request->profile, 'images/profile'.$lastUser);
-       // $user->save();
-        //return redirect()->route('user.index');
+        return redirect()->route('user.index')
+                        ->with('success','L\'utilisateur a été créer avec succés.');
     }
 
     public function show(User $user)
     {
-        //
+        return view('pages/shared/showUser', compact('user'));
     }
 
     public function edit(User $user)
     {
-        //
+        return view('pages/admin/updateUser', compact('user'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        $user->update([
+            'nom' => Str::upper($request->nom),
+            'prenom' => Str::ucfirst($request->prenom),
+            'adresse' => Str::ucfirst($request->adresse),
+            'ville' => Str::ucfirst($request->ville),
+            'email' => Str::lower($request->email),
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'date_naissance' => $request->date_naissance
+        ]);
+  
+        return redirect()->route('user.index')
+                        ->with('success','Utilisateurmis à jour avec succés');
     }
 
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->action('UsersController@index')
+                        ->with('success','Utilisateur supprimer avec succés');
     }
 }
