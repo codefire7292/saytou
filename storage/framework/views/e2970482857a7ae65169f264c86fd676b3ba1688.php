@@ -41,7 +41,7 @@ About <span class="sr-only">(current)</span></a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="<?php echo e(route('zone.index')); ?>"><i class="ti-map"></i> Lister</a>
           <a class="dropdown-item" href="<?php echo e(route('zone.create')); ?>"><i class="ti-map-alt"></i> Ajouter</a>
-          <a class="dropdown-item" href="<?php echo e(route('zone.create')); ?>"><i class="fa fa-street-view"></i> Affectations</a>
+          <a class="dropdown-item" href="<?php echo e(route('affectation.index')); ?>"><i class="fa fa-street-view"></i> Affectations</a>
         </div>
       </li>
       <li class="nav-item">

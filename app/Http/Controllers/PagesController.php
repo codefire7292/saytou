@@ -2,7 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Zone;
+use App\Models\Enquete;
+use App\Models\Enqueter;
+use App\Models\Etudiant;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Participation;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\EnqueteRequest;
 
 class PagesController extends Controller
 {
@@ -33,7 +42,23 @@ class PagesController extends Controller
 //COORDINATOR returning
     public function coordinator_index()
     {
-        return view('pages/coordinator/index');
+        $enquete = Enquete::all();
+        $users = DB::table('Personne')
+                ->selectRaw('Personne.nom, Personne.prenom, Personne.email')
+                ->join('Participation', 'Participation.Per_id', '=', 'Personne.id')
+                ->get();
+        $enqueter = DB::table('Personne')
+                ->selectRaw('Personne.nom, Personne.prenom, Enqueter.date')
+                ->join('Participation', 'Participation.Per_id', '=', 'Personne.id')
+                ->join('Enqueter', 'Enqueter.Per_id', '=', 'Personne.id')
+                //->where('Enqueter.date', '<', 'Enquete.fin')
+                ->distinct()
+                ->get();
+        $zones = DB::table('Zone')
+                ->selectRaw('Zone.nom_zone, Zone.departement, Zone.region, Personne.nom, Personne.prenom')
+                ->join('Personne', 'Personne.id', '=', 'Zone.Per_id')
+                ->get();
+        return view('pages/coordinator/index', compact('enquete', 'users', 'enqueter', 'zones'));
     }
 
     public function enquete_dispatcher()

@@ -35,6 +35,10 @@
 	<script src="https://cdn.ckeditor.com/4.13.0/full/ckeditor.js"></script>
 	<script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
 
+
+    <link rel="stylesheet" href="<?php echo e(asset('dispart/css/tether.min.css')); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset('dispart/css/form_builder.css')); ?>"/>
+
 </head>
 <body class="<?php echo e($class ?? ''); ?>">
 	

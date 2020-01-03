@@ -1,12 +1,37 @@
 <?php $__env->startSection('content'); ?>
     <div class="main">
         <div class="container">
+            <?php if($message = Session::get('error')): ?>
+                <div class="alert alert-danger">
+                    <p><?php echo $message; ?></p>
+                </div>
+            <?php endif; ?>
+             <?php if($message = Session::get('success')): ?>
+                    <div class="alert alert-success">
+                    <p><?php echo $message; ?></p>
+                </div>
+            <?php endif; ?>
+
+            <?php if($errors->any()): ?>
+            <div class="alert alert-danger">
+                <strong>ATTENTION !</strong> SVP veuiller verifier vos données fournies<br><br>
+                <ul>
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($error); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            </div>
+        <?php endif; ?>
             <div class="signup-content">
                 <div class="signup-img">
                     <img src="<?php echo e(asset('investigator/images/signup-img.jpg')); ?>" alt="">
                 </div>
                 <div class="signup-form">
-                    <form method="POST" class="register-form" id="register-form">
+                    <form method="POST" action="<?php echo e(route('enqueter.store')); ?>" class="register-form" id="register-form">
+                        <?php echo csrf_field(); ?>
+
+                        <input type="hidden" value="<?php echo e(date('Y-m-d H:i:s')); ?>" name="date" required/>
+                        <input type="hidden" value="<?php echo e(Auth::user()->id); ?>" name="Per_id" required/>
 						<h2 class="row justify-content-center">Formulaire d'enquête</h2>
                             <div class="form-group">
                                 <label for="name">Nom :</label>

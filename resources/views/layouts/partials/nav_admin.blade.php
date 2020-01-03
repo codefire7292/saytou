@@ -184,12 +184,19 @@
 
                 <div class="col-sm-5">
                     <div class="user-area dropdown float-right">
+                        @php    
+                            if (file_exists('images/avatar/'.Auth::user()->id.'.jpg')) {
+                                $file = 'images/avatar/'.Auth::user()->id.'.jpg';
+                            }else{
+                                $file = 'images/avatar/default.jpg';
+                            }
+                        @endphp
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="{{ asset('images/admin.jpg') }}" alt="User Avatar">
+                            <img class="user-avatar rounded-circle" src="{{ $file }}" alt="User Avatar">
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> Mon Profil</a>
+                            <a class="nav-link" href="{{ route('profile_path') }}"><i class="fa fa-user"></i> Mon Profil</a>
 
                             <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
 

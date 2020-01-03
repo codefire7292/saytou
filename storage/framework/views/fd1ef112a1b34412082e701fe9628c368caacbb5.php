@@ -98,7 +98,7 @@
 	        	<br><br><br>
 	        <?php endif; ?>
 	        <div class="">
-			<form method="POST" action="<?php echo e(route('user.store')); ?>">
+			<form enctype="multipart/form-data" method="POST" action="<?php echo e(route('user.store')); ?>">
                         <?php echo csrf_field(); ?>
 			  <div class="form-row">
 			    <div class="form-group col-md-6">
@@ -172,6 +172,13 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('zoneForm'); ?>
+
+	<?php if($message = Session::get('error')): ?>
+            <div class="alert alert-danger">
+            <p><?php echo $message; ?></p>
+        </div>
+	<?php endif; ?>
+
 	<?php if($message = Session::get('success')): ?>
 	        <div class="container alert alert-success">
 	            <p class="text-center"><?php echo e($message); ?></p>

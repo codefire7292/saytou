@@ -43,15 +43,14 @@
 </dir>
 
 
-
 	    <table class="table"> 
 		  <thead class="thead-dark">
 		    <tr>
 		      <th scope="col">#</th>
+		      <th scope="col">PROPHILE</th>
 		      <th scope="col">NOM</th>
 		      <th scope="col">PRENOM(S)</th>
 		      <th scope="col">ADRESSE</th>
-		      <th scope="col">BIRTHDAY</th>
 		      <th scope="col">E-MAIL</th>
 		      <th scope="col">STATUT</th>
 		      <th class="text-center" scope="col" width=15%>ACTIONS</th>
@@ -59,12 +58,19 @@
 		  </thead>
 		  <tbody>
 			@foreach ($result; $i=0 as $user)
+				@php    
+	                if (file_exists('images/avatar/'.$user->id.'.jpg')) {
+	                    $file = 'images/avatar/'.$user->id.'.jpg';
+	                }else{
+	                    $file = 'images/avatar/default.jpg';
+	                }
+	            @endphp
 			    <tr>
 			      <th scope="row">{{ ++$i }}</th>
+			      <td class="text-center"><img style="width: 40px; height: 40px;" class="rounded-circle" src="{{ $file }}" alt="User Avatar"></td>
 			      <td>{{ $user->nom }}</td>
 			      <td>{{ $user->prenom }}</td>
 			      <td>{{ $user->adresse }}</td>
-			      <td>{{ $user->date_naissance }}</td>
 			      <td>{{ Str::limit($user->email, 23) }}</td>
 			      <td>{{ str::ucfirst($user->role) }}</td>
 			      <td class="text-center"  class="row justify-content-center">

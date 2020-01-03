@@ -98,7 +98,7 @@
 	        	<br><br><br>
 	        @endif
 	        <div class="">
-			<form method="POST" action="{{ route('user.store') }}">
+			<form enctype="multipart/form-data" method="POST" action="{{ route('user.store') }}">
                         @csrf
 			  <div class="form-row">
 			    <div class="form-group col-md-6">
@@ -172,6 +172,13 @@
 @endsection
 
 @section('zoneForm')
+
+	@if ($message = Session::get('error'))
+            <div class="alert alert-danger">
+            <p>{!! $message !!}</p>
+        </div>
+	@endif
+
 	@if ($message = Session::get('success'))
 	        <div class="container alert alert-success">
 	            <p class="text-center">{{ $message }}</p>

@@ -4,12 +4,37 @@
 @section('content')
     <div class="main">
         <div class="container">
+            @if ($message = Session::get('error'))
+                <div class="alert alert-danger">
+                    <p>{!! $message !!}</p>
+                </div>
+            @endif
+             @if ($message = Session::get('success'))
+                    <div class="alert alert-success">
+                    <p>{!! $message !!}</p>
+                </div>
+            @endif
+
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>ATTENTION !</strong> SVP veuiller verifier vos données fournies<br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
             <div class="signup-content">
                 <div class="signup-img">
                     <img src="{{ asset('investigator/images/signup-img.jpg') }}" alt="">
                 </div>
                 <div class="signup-form">
-                    <form method="POST" class="register-form" id="register-form">
+                    <form method="POST" action="{{ route('enqueter.store') }}" class="register-form" id="register-form">
+                        @csrf
+
+                        <input type="hidden" value="{{ date('Y-m-d H:i:s') }}" name="date" required/>
+                        <input type="hidden" value="{{ Auth::user()->id }}" name="Per_id" required/>
 						<h2 class="row justify-content-center">Formulaire d'enquête</h2>
                             <div class="form-group">
                                 <label for="name">Nom :</label>

@@ -22,9 +22,6 @@
 			<br>
 		</div>
 	</div>
-	<?php if(Auth::user()->role === 'admin'): ?>
-		<?php echo $__env->make('layouts.partials.admin_footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-	<?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 

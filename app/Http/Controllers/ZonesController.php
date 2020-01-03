@@ -6,6 +6,7 @@ use App\Models\Zone;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\ZoneRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class ZonesController extends Controller
@@ -17,7 +18,11 @@ class ZonesController extends Controller
      */
     public function index()
     {
-        $result = Zone::paginate(5);
+        $result = DB::table('Zone')
+                ->selectRaw('Zone.nom_zone, Zone.id, Zone.Per_id, Zone.departement, Zone.region, Personne.nom, Personne.prenom')
+                ->join('Personne', 'Personne.id', '=', 'Zone.Per_id')
+                //->get()
+                ->paginate(5);
         return view('pages/coordinator/viewZone', compact('result'));
     }
 
@@ -40,15 +45,24 @@ class ZonesController extends Controller
      */
     public function store(ZoneRequest $request)
     {
-        Zone::create(
-        [
-            'Per_id' => $request->id_U,
-            'nom_zone' => Str::ucfirst($request->nom_zone),
-            'departement' => Str::ucfirst($request->departement),
-            'region' => Str::ucfirst($request->region),
-        ]);
-        return redirect()->route('zone.create')
-                        ->with('success','La zône a été créer avec succés.');
+        $query = Zone::where('nom_zone',$request->nom_zone) 
+                        ->where('departement',$request->departement)
+                        ->where('region',$request->region)->get();
+
+        if (isset($query[0]['id'])) {
+            return redirect()->route('zone.create')
+                            ->with('error','La zône éxiste déjà.');
+        } else {
+            Zone::create(
+            [
+                'Per_id' => $request->id_U,
+                'nom_zone' => Str::ucfirst($request->nom_zone),
+                'departement' => Str::ucfirst($request->departement),
+                'region' => Str::ucfirst($request->region),
+            ]);
+            return redirect()->route('zone.create')
+                            ->with('success','La zône a été créer avec succés.');
+        }
     }
 
     /**

@@ -62,9 +62,26 @@ Route::middleware('auth')->group(function () {
 		'as' => 'help_path',
 		'uses' => 'PagesController@help'
 	]);
+	Route::get('profile', [
+		'as' => 'profile_path',
+		'uses' => 'UsersController@profile'
+	]);
+	Route::post('update_avatar', [
+		'as' => 'update_avatar_path',
+		'uses' => 'UsersController@update_avatar'
+	]);
+
+
+	Route::get('pdf-generate', [
+		'as' => 'pdf-generate',
+		'uses' => 'UsersController@PDFgenerate'
+	]);
 	#etudiant------------------------------------------------------
 
 	Route::resource('etudiant', 'EtudiantController');
+	#enqueter------------------------------------------------------
+
+	Route::resource('enqueter', 'EnqueterController');
 	#enquete------------------------------------------------------
 
 	Route::resource('enquete', 'EnquetesController');
@@ -74,4 +91,7 @@ Route::middleware('auth')->group(function () {
 	#zones -------------------------------------------------------
 
 	Route::resource('zone','ZonesController');
+	#affectations -------------------------------------------------
+
+	Route::resource('affectation','AffectationsController');
 });

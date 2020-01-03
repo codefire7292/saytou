@@ -20,10 +20,10 @@
 
 @section('liste')
 		@if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
+	        <div class="alert alert-success">
+	            <p>{{ $message }}</p>
+	        </div>
+   		 @endif
 
 
 
@@ -69,7 +69,7 @@
 			      <td>{{ $user->adresse }}</td>
 			      <td>{{ $user->date_naissance }}</td>
 			      <td>{{ Str::limit($user->email, 23) }}</td>
-			      <td>{{ str::ucfirst($user->role) }}</td>
+			      <td>{{ Str::ucfirst($user->role) }}</td>
 			      <td class="row justify-content-center">
 		      		<a class="edit-modal btn btn-success btn-sm rounded" href="{{ route('user.show', $user->id) }}"><i class="fa fa-eye"></i></a>
 		      	@if(Auth::user()->role === 'admin')

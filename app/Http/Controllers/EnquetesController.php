@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Enquete;
 use App\Models\User;
+use App\Models\Zone;
+use App\Models\Enquete;
+use App\Models\Enqueter;
+use App\Models\Etudiant;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Participation;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\EnqueteRequest;
 
 class EnquetesController extends Controller
@@ -24,7 +30,15 @@ class EnquetesController extends Controller
 
     public function store(EnqueteRequest $request)
     {
-        Enquete::create([
+        $query = Enquete::where('motif',$request->motif) 
+                        ->where('contexte',$request->contexte)
+                        ->where('debut',$request->debut)->get();
+
+        if (isset($query[0]['id'])) {
+            return redirect()->route('EnquetesController.create')
+                            ->with('error','L\'enquête à déjà été créer.');
+        } else {
+            Enquete::create([
             //'Com_id' => $request->Com_id,
             'Adm_id' => $request->id,
             'motif' => $request->motif,
@@ -32,8 +46,15 @@ class EnquetesController extends Controller
             'debut' => $request->debut,
             'fin' => $request->fin,
             'cout' => $request->cout,
-        ]);
-        return redirect()->action('EnquetesController@index');
+            ]);
+            return redirect()->action('EnquetesController@index')
+                            ->with('success','L\'enquête a été créer avec succés.');
+        }
+
+
+
+
+        
     }
 
     public function show(Enquete $enquete)

@@ -12,6 +12,30 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+
+    <!--===============================================================================================-->  
+    <link rel="icon" type="image/png" href="{{ asset('auth_log/images/icons/favicon.ico') }}"/>
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('auth_log/vendor/bootstrap/css/bootstrap.min.css') }}">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('auth_log/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('auth_log/fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('auth_log/vendor/animate/animate.css') }}">
+<!--===============================================================================================-->  
+    <link rel="stylesheet" type="text/css" href="{{ asset('auth_log/vendor/css-hamburgers/hamburgers.min.css') }}">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('auth_log/vendor/animsition/css/animsition.min.css') }}">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('auth_log/vendor/select2/select2.min.css') }}">
+<!--===============================================================================================-->  
+    <link rel="stylesheet" type="text/css" href="{{ asset('auth_log/vendor/daterangepicker/daterangepicker.css') }}">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('auth_log/css/util.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('auth_log/css/main.css') }}">
+<!--===============================================================================================-->
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -21,7 +45,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body style="background-color: #666666;">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -45,11 +69,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

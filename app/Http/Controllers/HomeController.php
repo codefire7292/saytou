@@ -29,13 +29,16 @@ class HomeController extends Controller
         if (Auth::user()->role === "admin" ) {
             return view('pages/admin/index');
         } elseif (Auth::user()->role === "coordonnateur" ) {
-            return view('pages/coordinator/index');
+            return app()->make(PagesController::class)->callAction('coordinator_index', []);
+            //return view('pages/coordinator/index');
         }elseif (Auth::user()->role === "commanditaire" ) {
             return view('pages/patron/index');
         }elseif (Auth::user()->role === "enquêteur" ) {
             return view('pages/investigator/index');
         }elseif (Auth::user()->role === "étudiant" ) {
             return view('pages/etudiant/index');
+        }else{
+           return redirect()->route('logout');
         }
     }
 }

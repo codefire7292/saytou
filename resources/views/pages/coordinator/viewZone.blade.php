@@ -44,10 +44,10 @@
 			      <td>{{ $zone->nom_zone }}</td>
 			      <td>{{ $zone->departement }}</td>
 			      <td>{{ $zone->region }}</td>
-			      <td>{{ $zone->Per_id }}</td>
+			      <td>{{ $zone->nom }} {{ $zone->prenom }}</td>
 			      <td class="row justify-content-center">
 		      		<a class="edit-modal btn btn-success btn-sm rounded" href="{{ route('zone.show', $zone->id) }}"><i class="fa fa-eye"></i></a>
-		      	@if(Auth::user()->role === 'coordonnateur')
+		      	@if(Auth::user()->role === 'coordonnateur' AND Auth::user()->id === $zone->Per_id)
 		      		<a class="edit-modal btn btn-warning btn-sm rounded mx-1" href="{{ route('zone.edit', $zone->id) }}"><i class="fa fa-pencil"></i></a>
 			      	<form action="{{ route('zone.destroy',$zone->id) }}" method="POST" accept-charset="utf-8" class="d-inline-block">
 			      		@csrf

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
+use Auth;
+use PDF;
+use Image;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Database\Seeds\UserTableSeeder;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
@@ -15,6 +18,38 @@ use Illuminate\Database\Eloquent\Model;
 
 class UsersController extends Controller
 {
+////////////////////////////////////////////////////////////////
+    public function profile(){
+        //return view("profile", array('user' => Auth::User()));
+        return view('pages/shared/profile', array('user' => Auth::User()));
+    }
+
+     public function PDFgenerate()
+    {
+        $role=null;
+        $query = $role ? User::whereRole($role)->where('role','!=','étudiant') : User::where('role','!=','étudiant');
+
+        $result = $query->oldest('nom')->paginate(5);
+        $profil = User::all();
+        //$result = User::paginate(5);
+      //  return view('pages/shared/adminCoordinator/viewUser', compact('result', 'profil', 'role'));
+
+        $pdf = PDF::loadView('pages/shared/adminCoordinator/viewUser', compact('result', 'profil', 'role'));
+  
+        return $pdf->download('RealProgrammer.pdf');
+    }
+
+    public function update_avatar(Request $request){
+        //dd(Auth::user()->id);
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $filename = Auth::user()->id.'.'.$avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(300,300)->save( public_path('images/avatar/'. $filename ));
+        }
+        return view("pages/shared/profile", array('user' => Auth::User()));
+    }
+
+////////////////////////////////////////////////////////////////
      public function index($role = null)
     {
 

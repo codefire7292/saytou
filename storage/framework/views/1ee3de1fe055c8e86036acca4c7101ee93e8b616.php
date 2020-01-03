@@ -1,6 +1,3 @@
-
-
-
 <?php echo $__env->make('layouts.partials.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -314,8 +311,15 @@
                         <div class="fa fa-twitter wtt-mark"></div>
 
                         <div class="media">
+                            <?php    
+                if (file_exists('images/avatar/'.Auth::user()->id.'.jpg')) {
+                    $file = 'images/avatar/'.Auth::user()->id.'.jpg';
+                }else{
+                    $file = 'images/avatar/default.jpg';
+                }
+            ?>
                             <a href="#">
-                                <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="images/admin.jpg">
+                                <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="<?php echo e($file); ?>">
                             </a>
                             <div class="media-body">
                                 <h2 class="text-white display-6"><?php echo e(Auth::user()->nom); ?></h2>

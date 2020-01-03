@@ -40,10 +40,10 @@
 		      <td>{{ $enquete->motif }}</td>
 		      <td>{{ $enquete->debut }}</td>
 		      <td>{{ $enquete->fin }}</td>
-		      <td>{{ $enquete->cout }}</td>
+		      <td>{{ $enquete->cout }} Frs</td>
 		      <td class="text-center" class="row justify-content-center">
 		      <a class="edit-modal btn btn-success btn-sm rounded" href="{{ route('enquete.show', $enquete->id) }}"><i class="fa fa-eye"></i></a>
-		    @if(Auth::user()->role === 'admin')
+		    @if(Auth::user()->role === 'admin' AND Auth::user()->id === $enquete->Adm_id)
 		      		<a class="edit-modal btn btn-warning btn-sm rounded mx-1" href="{{ route('enquete.edit', $enquete->id) }}"><i class="fa fa-pencil"></i></a>
 			      	<form action="{{ route('enquete.destroy',$enquete->id) }}" method="POST" accept-charset="utf-8" class="d-inline-block">
 			      		@csrf

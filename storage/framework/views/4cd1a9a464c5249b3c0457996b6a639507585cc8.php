@@ -38,10 +38,10 @@
 		      <td><?php echo e($enquete->motif); ?></td>
 		      <td><?php echo e($enquete->debut); ?></td>
 		      <td><?php echo e($enquete->fin); ?></td>
-		      <td><?php echo e($enquete->cout); ?></td>
+		      <td><?php echo e($enquete->cout); ?> Frs</td>
 		      <td class="text-center" class="row justify-content-center">
 		      <a class="edit-modal btn btn-success btn-sm rounded" href="<?php echo e(route('enquete.show', $enquete->id)); ?>"><i class="fa fa-eye"></i></a>
-		    <?php if(Auth::user()->role === 'admin'): ?>
+		    <?php if(Auth::user()->role === 'admin' AND Auth::user()->id === $enquete->Adm_id): ?>
 		      		<a class="edit-modal btn btn-warning btn-sm rounded mx-1" href="<?php echo e(route('enquete.edit', $enquete->id)); ?>"><i class="fa fa-pencil"></i></a>
 			      	<form action="<?php echo e(route('enquete.destroy',$enquete->id)); ?>" method="POST" accept-charset="utf-8" class="d-inline-block">
 			      		<?php echo csrf_field(); ?>
